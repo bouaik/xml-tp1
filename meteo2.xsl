@@ -8,9 +8,16 @@
             <line x1="100" y1="600" x2="1000" y2="600" stroke="blue" stroke-width="2"></line>
             
             <xsl:for-each select="meteo/mesure[@date='2006-11-11']/ville">
-                <xsl:variable name="x" select="position() * 120"/>
-                <text stroke="blue" x="{$x}" y="620"><xsl:value-of select="@nom"/></text>
+                <xsl:variable name="pos" select="position() * 120"/>
+                <xsl:variable name="temp" select="@temperature * 10"/>
+                <text stroke="blue" x="{$pos}" y="620"><xsl:value-of select="@nom"/></text>
+                <rect fill="yellow" stroke="black" width="20" height="{$temp}" x="{$pos}" y="{600 - $temp}">
+                   
+                    <animate attributeName="y" dur="3s" from="600" to="{600 - $temp}"></animate>
+                </rect>
+                <text x="{$pos}" y="{590 - $temp}"><xsl:value-of select="@temperature"/></text>
             </xsl:for-each>
+            
         </svg>
         
     </xsl:template>
